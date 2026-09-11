@@ -1,6 +1,17 @@
 """Forge exceptions."""
 
 from forge.exceptions.base import ForgeError
-from forge.exceptions.plugin import InvalidStateTransitionError, PluginError
+from forge.exceptions.plugin import (
+    InvalidStateTransitionError,
+    PluginAlreadyRegisteredError,
+    PluginError,
+    PluginNotFoundError,
+)
 
-__all__ = ["ForgeError", "PluginError", "InvalidStateTransitionError"]
+__all__ = [
+    "ForgeError",
+    "PluginError",
+    "InvalidStateTransitionError",
+    "PluginAlreadyRegisteredError",
+    "PluginNotFoundError",
+]

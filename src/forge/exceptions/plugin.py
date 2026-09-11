@@ -9,3 +9,11 @@ class PluginError(ForgeError):
 
 class InvalidStateTransitionError(PluginError):
     """Raised when an illegal lifecycle transition is attempted."""
+
+
+class PluginAlreadyRegisteredError(PluginError):
+    """Raised when attempting to register a plugin name that is already present."""
+
+
+class PluginNotFoundError(PluginError):
+    """Raised when an expected plugin is not found in the registry."""
