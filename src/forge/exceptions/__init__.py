@@ -6,6 +6,7 @@ from forge.exceptions.plugin import (
     PluginAlreadyRegisteredError,
     PluginDiscoveryError,
     PluginError,
+    PluginLoadError,
     PluginNotFoundError,
 )
 
@@ -16,4 +17,5 @@ __all__ = [
     "PluginAlreadyRegisteredError",
     "PluginNotFoundError",
     "PluginDiscoveryError",
+    "PluginLoadError",
 ]

@@ -21,3 +21,7 @@ class PluginNotFoundError(PluginError):
 
 class PluginDiscoveryError(PluginError):
     """Raised when an error occurs during plugin discovery."""
+
+
+class PluginLoadError(PluginError):
+    """Raised when an error occurs while importing or instantiating a plugin."""
