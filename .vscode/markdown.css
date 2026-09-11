@@ -1,0 +1,29 @@
+/* Clean, dark, high-contrast code block theme for Markdown Preview */
+pre,
+div.code-block,
+.vscode-dark pre,
+.vscode-light pre {
+    background-color: #1e1e2e !important;
+    border: 1px solid #313244 !important;
+    border-radius: 8px !important;
+    padding: 14px 16px !important;
+    color: #cdd6f4 !important;
+}
+
+pre code,
+.vscode-dark pre code,
+.vscode-light pre code {
+    background-color: transparent !important;
+    color: #cdd6f4 !important;
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 13.5px;
+    line-height: 1.5;
+}
+
+/* Inline code styling */
+:not(pre) > code {
+    background-color: #2b2c3d !important;
+    color: #f38ba8 !important;
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
+}

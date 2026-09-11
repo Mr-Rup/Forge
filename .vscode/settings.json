@@ -1,0 +1,10 @@
+{
+    "markdown.styles": [
+        ".vscode/markdown.css"
+    ],
+    "workbench.colorCustomizations": {
+        "textCodeBlock.background": "#1e1e2e",
+        "textPreformat.background": "#1e1e2e",
+        "textPreformat.foreground": "#cdd6f4"
+    }
+}
