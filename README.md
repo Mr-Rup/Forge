@@ -2,7 +2,7 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Tests](https://img.shields.io/badge/tests-32%20passed-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/tests-39%20passed-brightgreen.svg)]()
 
 > **Forge** is a lightweight, extensible Python plugin framework designed to turn independent pieces of functionality into a cohesive, discoverable, and manageable ecosystem.
 
@@ -113,6 +113,7 @@ Explore our interconnected documentation guides to learn more about the design a
 | 📜 **[Contracts & Lifecycle](docs/contracts_and_lifecycle.md)** | In-depth look at `PluginMetadata`, `PluginState`, and the safe state machine. |
 | 📋 **[Registry & Discovery](docs/registry_and_discovery.md)** | How Forge finds plugins across modules/directories and tracks them safely. |
 | 📦 **[Dynamic Loading & Failure Isolation](docs/dynamic_loading.md)** | Safe instantiation, registry coordination, and preventing faulty plugins from crashing Forge. |
+| ✅ **[Validation & Errors](docs/validation_and_errors.md)** | Metadata validation, contract compliance checks, and the typed exception hierarchy. |
 | 🗺️ **[Master Architecture Blueprint](docs/architecture.md)** | The comprehensive 20-phase master roadmap and design philosophy of Forge. |
 
 ---
@@ -127,7 +128,7 @@ Forge is built through disciplined, incremental phases:
 - [x] **Phase 3**: Plugin Registry (`PluginRegistry`, membership & lookups)
 - [x] **Phase 4**: Plugin Discovery (`ModulePluginDiscoverer`, `DirectoryPluginDiscoverer`)
 - [x] **Phase 5**: Dynamic Loading (`PluginLoader`, failure isolation)
-- [ ] **Phase 6**: Validation & Exceptions
+- [x] **Phase 6**: Validation & Exceptions (`PluginValidator`, typed exceptions)
 - [ ] **Phase 7**: Plugin Context & Dependency Injection
 - [ ] **Phase 8**: Event-Driven Communication
 - [ ] **Phase 9**: Extension Hooks

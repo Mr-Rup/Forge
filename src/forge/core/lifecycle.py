@@ -3,7 +3,11 @@
 from typing import Dict, Set
 
 from forge.contracts.plugin import Plugin, PluginState
-from forge.exceptions.plugin import InvalidStateTransitionError
+from forge.exceptions.plugin import (
+    InvalidStateTransitionError,
+    PluginInitializationError,
+    PluginShutdownError,
+)
 
 # Valid state progression map
 VALID_TRANSITIONS: Dict[PluginState, Set[PluginState]] = {
@@ -44,9 +48,11 @@ class PluginLifecycleManager:
         try:
             plugin.initialize()
             self._transition(plugin, PluginState.INITIALIZED)
-        except Exception:
+        except Exception as e:
             self._transition(plugin, PluginState.FAILED)
-            raise
+            raise PluginInitializationError(
+                f"Plugin '{plugin.metadata.name}' failed during initialization: {e}"
+            ) from e
 
     def activate(self, plugin: Plugin) -> None:
         """Transition initialized plugin to ACTIVE state."""
@@ -57,9 +63,11 @@ class PluginLifecycleManager:
         try:
             plugin.shutdown()
             self._transition(plugin, PluginState.STOPPED)
-        except Exception:
+        except Exception as e:
             self._transition(plugin, PluginState.FAILED)
-            raise
+            raise PluginShutdownError(
+                f"Plugin '{plugin.metadata.name}' failed during shutdown: {e}"
+            ) from e
 
     def _transition(self, plugin: Plugin, new_state: PluginState) -> None:
         """Validate and apply state transition."""

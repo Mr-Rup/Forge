@@ -6,7 +6,9 @@ from forge.contracts.plugin import Plugin
 from forge.core.discovery import DiscoveredPlugin
 from forge.core.lifecycle import PluginLifecycleManager
 from forge.core.registry import PluginRegistry
+from forge.core.validator import PluginValidator
 from forge.exceptions.plugin import PluginLoadError
+
 
 class PluginLoader:
     """Instantiates plugins and coordinates their initial loading and registration."""
@@ -15,9 +17,11 @@ class PluginLoader:
         self,
         lifecycle_manager: Optional[PluginLifecycleManager] = None,
         registry: Optional[PluginRegistry] = None,
+        validator: Optional[PluginValidator] = None,
     ) -> None:
         self.lifecycle_manager = lifecycle_manager or PluginLifecycleManager()
         self.registry = registry
+        self.validator = validator or PluginValidator()
 
     def load(
         self, candidate: Union[DiscoveredPlugin, type[Plugin]]
@@ -43,6 +47,10 @@ class PluginLoader:
             raise PluginLoadError(
                 f"Failed to instantiate plugin {source_desc}: {e}"
             ) from e
+
+        # Validate plugin specification
+        if self.validator is not None:
+            self.validator.validate(plugin)
 
         # Transition to LOADED state
         self.lifecycle_manager.load(plugin)

@@ -4,9 +4,12 @@ import pytest
 
 from forge.contracts.plugin import Plugin, PluginMetadata, PluginState
 from forge.core.lifecycle import PluginLifecycleManager
-from forge.exceptions.plugin import InvalidStateTransitionError
+from forge.exceptions.plugin import (
+    InvalidStateTransitionError,
+    PluginInitializationError,
+    PluginShutdownError,
+)
 from forge.plugins.hello import HelloPlugin
-
 
 def test_plugin_happy_path_lifecycle() -> None:
     """Verify complete valid lifecycle progression."""
@@ -27,7 +30,6 @@ def test_plugin_happy_path_lifecycle() -> None:
     manager.stop(plugin)
     assert plugin.state == PluginState.STOPPED
 
-
 def test_invalid_state_transition_raises_error() -> None:
     """Transitioning out of order must raise InvalidStateTransitionError."""
     plugin = HelloPlugin()
@@ -37,9 +39,8 @@ def test_invalid_state_transition_raises_error() -> None:
     with pytest.raises(InvalidStateTransitionError):
         manager.activate(plugin)
 
-
 def test_initialization_failure_transitions_to_failed() -> None:
-    """Failing during initialize must transition plugin to FAILED."""
+    """Failing during initialize must transition plugin to FAILED and raise PluginInitializationError."""
     class FaultyInitPlugin(Plugin):
         def initialize(self) -> None:
             raise RuntimeError("Init crashed")
@@ -56,14 +57,13 @@ def test_initialization_failure_transitions_to_failed() -> None:
     manager = PluginLifecycleManager()
     manager.load(plugin)
 
-    with pytest.raises(RuntimeError, match="Init crashed"):
+    with pytest.raises(PluginInitializationError, match="failed during initialization"):
         manager.initialize(plugin)
 
     assert plugin.state == PluginState.FAILED
 
-
 def test_shutdown_failure_transitions_to_failed() -> None:
-    """Failing during shutdown must transition plugin to FAILED."""
+    """Failing during shutdown must transition plugin to FAILED and raise PluginShutdownError."""
     class FaultyShutdownPlugin(Plugin):
         def initialize(self) -> None:
             pass
@@ -82,7 +82,7 @@ def test_shutdown_failure_transitions_to_failed() -> None:
     manager.initialize(plugin)
     manager.activate(plugin)
 
-    with pytest.raises(RuntimeError, match="Shutdown crashed"):
+    with pytest.raises(PluginShutdownError, match="failed during shutdown"):
         manager.stop(plugin)
 
     assert plugin.state == PluginState.FAILED
