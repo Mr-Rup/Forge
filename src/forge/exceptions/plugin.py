@@ -17,3 +17,7 @@ class PluginAlreadyRegisteredError(PluginError):
 
 class PluginNotFoundError(PluginError):
     """Raised when an expected plugin is not found in the registry."""
+
+
+class PluginDiscoveryError(PluginError):
+    """Raised when an error occurs during plugin discovery."""

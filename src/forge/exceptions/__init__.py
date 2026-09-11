@@ -4,6 +4,7 @@ from forge.exceptions.base import ForgeError
 from forge.exceptions.plugin import (
     InvalidStateTransitionError,
     PluginAlreadyRegisteredError,
+    PluginDiscoveryError,
     PluginError,
     PluginNotFoundError,
 )
@@ -14,4 +15,5 @@ __all__ = [
     "InvalidStateTransitionError",
     "PluginAlreadyRegisteredError",
     "PluginNotFoundError",
+    "PluginDiscoveryError",
 ]
